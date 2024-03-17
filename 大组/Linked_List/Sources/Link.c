@@ -1,10 +1,9 @@
 //
 // Created by 86158 on 2024/3/17.
 //
-#include <stdio.h> // 包含标准输入输出库
-#include <stdlib.h> // 包含标准库，用于内存分配
+#include <stdio.h> 
+#include <stdlib.h> 
 
-// 定义单链表的节点结构
 typedef struct Node {
     int data; 
     struct Node* next; 
