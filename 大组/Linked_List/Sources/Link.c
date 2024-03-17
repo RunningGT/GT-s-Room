@@ -6,8 +6,8 @@
 
 // 定义单链表的节点结构
 typedef struct Node {
-    int data; // 节点数据
-    struct Node* next; // 指向下一个节点的指针
+    int data; 
+    struct Node* next; 
 } Node;
 
 void initList(Node **head){
@@ -17,14 +17,14 @@ void initList(Node **head){
 // 创建新节点的函数
 Node* newNode(int data) {
     Node *node = (Node*)malloc(sizeof(Node)); // 动态分配内存
-    node->data = data; // 设置节点数据
-    node->next = NULL; // 初始化下一个节点指针为NULL
+    node->data = data; 
+    node->next = NULL; 
     return node; // 返回新节点的指针
 }
 
 // 在链表末尾添加节点的函数
 void append(Node** head, int data) {
-    Node* new_node = newNode(data); // 创建新节点
+    Node* new_node = newNode(data); 
     if (*head == NULL) { // 如果链表为空
         *head = new_node; // 新节点成为头节点
         return;
@@ -44,7 +44,7 @@ _Bool insertList(Node *head, int element, int index){
         if(head == NULL) return 0;
     }
     Node *node = (Node*)malloc(sizeof(Node));
-    if(node == NULL) return 0;   //创建一个新的结点，如果内存空间申请失败返回0
+    if(node == NULL) return 0;  
     node->data = element;   //将元素保存到新创建的结点中
     node->next = head->next;   //先让新插入的节点指向原本位置上的这个结点
     head->next = node;   //接着将前驱结点指向新的这个结点
@@ -53,7 +53,7 @@ _Bool insertList(Node *head, int element, int index){
 
 // 交换任意两个节点数据的函数
 void swapData(Node* head, int x, int y) {
-    if (x == y) return; // 如果x和y相同，则不需要交换
+    if (x == y) return; 
 
     Node* current = head;
     Node* nodeX = NULL;
@@ -91,10 +91,10 @@ Node* findMidpoint(Node* head) {
 int hasCycle(Node* head) {
     Node *slow_ptr = head, *fast_ptr = head; // 使用两个指针
     while (fast_ptr && fast_ptr->next) { // 遍历链表
-        slow_ptr = slow_ptr->next; // 慢指针移动一步
-        fast_ptr = fast_ptr->next->next; // 快指针移动两步
-        if (slow_ptr == fast_ptr) { // 如果两指针相遇
-            return 1; // 存在环
+        slow_ptr = slow_ptr->next; // 慢指针移动一步，快指针移动两步
+        fast_ptr = fast_ptr->next->next; 
+        if (slow_ptr == fast_ptr) { // 如果两指针相遇，则存在环
+            return 1; 
         }
     }
     return 0; // 不存在环
@@ -176,7 +176,7 @@ int main() {
     printf("反转后: ");
     printList(head);
 
-    reverseIterative(&head); // 环
+    reverseIterative(&head); 
     printf("反转后: ");
     printList(head);
 
