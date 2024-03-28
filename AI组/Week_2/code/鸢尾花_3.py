@@ -5,10 +5,7 @@ from scipy import optimize
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import classification_report
 
-# 加载数据
 data = pd.read_csv('iris.csv')
-
-# 定义特征和目标
 features = ['Sepal.Length', 'Sepal.Width', 'Petal.Length', 'Petal.Width']
 target = 'Species'
 
@@ -16,12 +13,12 @@ target = 'Species'
 le = LabelEncoder()
 data[target] = le.fit_transform(data[target])
 
-# 获取特征和目标数组
 X = data[features].values
 y = data[target].values
 
-n_classes = len(np.unique(y))  # 类别个数
-n_each = 50  # 每类的样本数
+ # 类别个数，还有样本数
+n_classes = len(np.unique(y)) 
+n_each = 50  
 
 # One-hot编码目标变量
 def one_hot_encode(y):
@@ -61,7 +58,7 @@ def softmax(z):
 # 定义损失函数
 def cost_function(theta, X, y):
     m = X.shape[0]
-    # 重要：在计算之前将theta重塑为原始的 (5, 3) 形状
+    # 这里的reshape是为了在计算之前将theta变为原始的 (5, 3) 形状
     theta = theta.reshape(X.shape[1], n_classes)
     logits = X.dot(theta)
     prob = softmax(logits)
@@ -71,15 +68,11 @@ def cost_function(theta, X, y):
 # 定义梯度函数
 def gradient(theta, X, y):
     m = X.shape[0]
-    # 重要：在计算之前将theta重塑为原始的 (5, 3) 形状
     theta = theta.reshape(X.shape[1], n_classes)
     logits = X.dot(theta)
     prob = softmax(logits)
     grad = (-1 / m) * X.T.dot(y - prob) + 1e-4 * theta
     return grad.flatten()
-
-# # 展开theta以便使用optimize.minimize
-# theta_initial = theta.flatten()
 
 # 调用优化函数
 result = optimize.minimize(fun=cost_function, x0=theta_initial, args=(X_train, y_train), method='TNC', jac=gradient)
@@ -87,11 +80,10 @@ result = optimize.minimize(fun=cost_function, x0=theta_initial, args=(X_train, y
 # 获取优化后的theta
 optimal_theta = result.x.reshape(X_train.shape[1], n_classes)
 
-# 预测函数
 def predict(X, theta):
     return np.argmax(softmax(X.dot(theta)), axis=1)
 
-# 进行预测
+# 预测
 y_train_pred = predict(X_train, optimal_theta)
 y_val_pred = predict(X_val, optimal_theta)
 y_test_pred = predict(X_test, optimal_theta)
